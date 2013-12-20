@@ -19,7 +19,7 @@ module Nada
     def makes
       response = get_url "Makes"
       response_obj = JSON.parse response
-      response_obj["GetMakesResult"]
+      response_obj["GetMakesResult"].map{|r| Models::Make.from_response_hash(r)}
     end
 
     def years(make_id)

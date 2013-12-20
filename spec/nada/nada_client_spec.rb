@@ -23,9 +23,10 @@ describe Nada::NadaClient, "#initialize" do
 end
 
 describe Nada::NadaClient, "#makes" do
-  it "returns an array of hashes representing makes and ids" do
+  it "returns an array of Make objects" do
     result = default_client.makes
     expect(result).to be_an Array
+    expect(result.first).to be_a Nada::Models::Make
   end
 end
 
