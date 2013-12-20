@@ -21,6 +21,17 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Testing
+
+To run the tests, you need to set the following environment variables
+
+These can be set in a .env file at the root of the project
+
+NADA_USERNAME=<Your username>
+NADA_PASSWORD=<Your password>
+
+Now you can run rake
+
 ## Contributing
 
 1. Fork it
