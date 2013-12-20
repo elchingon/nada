@@ -4,6 +4,7 @@
 .config
 .env
 .yardoc
+bin
 Gemfile.lock
 InstalledFiles
 _yardoc
