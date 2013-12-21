@@ -32,19 +32,23 @@ end
 
 describe Nada::NadaClient, "#years" do
   it "returns an array of hashes representing years and ids" do
-    valid_make_id = 1216
+    make = Nada::Models::Make.new
+    make.id = 1216
 
-    result = default_client.years valid_make_id
+    result = default_client.years make
     expect(result).to be_an Array
+    expect(result.first).to be_a Integer
   end
 end
 
 describe Nada::NadaClient, "#categories" do
   it "returns an array of hashes" do
-    valid_make_id = 1216
+    make = Nada::Models::Make.new
+    make.id = 1216
     valid_year = 2013
 
-    result = default_client.categories valid_make_id, valid_year
+    result = default_client.categories make, valid_year
+    binding.pry
     expect(result).to be_an Array
   end
 end

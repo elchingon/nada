@@ -16,20 +16,31 @@ module Nada
       @root_url = opts.fetch(:root_url){DEFAULT_ROOT_URL}
     end
 
+    # Lists the available vehicle makes
+    #
+    # @return [Array<Nada::Models::Make>] List of available makes
     def makes
       response = get_url "Makes"
       response_obj = JSON.parse response
       response_obj["GetMakesResult"].map{|r| Models::Make.from_response_hash(r)}
     end
 
-    def years(make_id)
-      response = get_url "Years/#{make_id}"
+    # Lists the years available for a given make
+    #
+    # @param make [Nada::Models::Make] Make to search for available years
+    # @return [Array<Integer>] Years that are available
+    def years(make)
+      response = get_url "Years/#{make.id}"
       response_obj = JSON.parse response
-      response_obj["GetYearsResult"]
+      response_obj["GetYearsResult"].map{|r| r["Year"]}
     end
 
-    def categories(make_id, year_id)
-      response = get_url "Categories/#{make_id}/#{year_id}"
+    # Lists the categories available for a given make and year
+    #
+    # @param make [Nada::Models::Make] Make to search with
+    # @param year [Integer] Year to search with
+    def categories(make, year)
+      response = get_url "Categories/#{make.id}/#{year}"
       response_obj = JSON.parse response
       response_obj["GetCategoriesResult"]
     end
