@@ -88,12 +88,14 @@ module Nada
 
   describe NadaClient, "#used_price" do
     it "returns a hash representing the used price" do
-      valid_vehicle_id = 117209
-      valid_options_string = "137|244|018"
+      vehicle = Models::Vehicle.new id: 117209
+      option_1 = Models::Option.new code: "137"
+      option_2 = Models::Option.new code: "224"
+      option_3 = Models::Option.new code: "018"
       mileage = 25000
 
-      result = default_client.used_price valid_vehicle_id, valid_options_string, mileage
-      expect(result).to be_a Hash
+      result = default_client.used_price vehicle, [option_1, option_2, option_3], mileage
+      expect(result).to be_a Models::UsedPrice
     end
   end
 

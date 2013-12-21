@@ -82,10 +82,18 @@ module Nada
       response_obj["GetOptionsResult"].map{|r| Models::Option.from_response_hash(r)}
     end
 
-    def used_price(vehicle_id, options_string, mileage)
-      response = get_url "Prices/#{vehicle_id}/#{URI::escape(options_string)}/#{mileage}"
+    # Gets the pricing information for this vehicle
+    #
+    # @param vehicle [Nada::Models::Vehicle] Vehicle to get the price for
+    # @param options [Array<Nada::Models::Option] The options on this specific vehicle
+    # @param mileage [Integer] Number of miles on this vehicle
+    # @return [Nada::Models::UsedPrice] Price information for this vehicle
+    def used_price(vehicle, options=[], mileage)
+      options_string = options.collect(&:code).join("|")
+
+      response = get_url "Prices/#{vehicle.id}/#{URI::escape(options_string)}/#{mileage}"
       response_obj = JSON.parse response
-      response_obj["GetUsedPriceResult"]
+      Models::UsedPrice.from_response_hash response_obj["GetUsedPriceResult"]
     end
 
     private
