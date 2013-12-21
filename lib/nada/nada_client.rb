@@ -60,10 +60,16 @@ module Nada
       response_obj["GetModelsResult"].map{|r| Models::Model.from_response_hash(r)}
     end
 
-    def trims(year_id, model_id)
-      response = get_url "Trims/#{year_id}/#{model_id}"
+    # Lists the trims available for a given year, model
+    #
+    # @param year [Integer] Year to search with
+    # @param category [Nada::Models::Model] Model to search with
+    # @return [Array<Nada::Models::Vehicle>] Vehicles available within
+    # search
+    def trims(year, model)
+      response = get_url "Trims/#{year}/#{model.id}"
       response_obj = JSON.parse response
-      response_obj["GetTrimsResult"]
+      response_obj["GetTrimsResult"].map{|r| Models::Vehicle.from_response_hash(r)}
     end
 
     def options(vehicle_id)

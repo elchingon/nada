@@ -67,12 +67,13 @@ module Nada
 
   describe NadaClient, "#trims" do
     it "returns an array of hashes" do
-      valid_year_id = 2013
-      valid_model_id = 10253
+      year = 2013
+      model = Models::Model.new id: 10253
 
 
-      result = default_client.trims valid_year_id, valid_model_id
+      result = default_client.trims year, model
       expect(result).to be_an Array
+      expect(result.first).to be_a Models::Vehicle
     end
   end
 
