@@ -39,16 +39,25 @@ module Nada
     #
     # @param make [Nada::Models::Make] Make to search with
     # @param year [Integer] Year to search with
+    # @return [Array<Nada::Models::Category>] Categories available within
+    # search
     def categories(make, year)
       response = get_url "Categories/#{make.id}/#{year}"
       response_obj = JSON.parse response
-      response_obj["GetCategoriesResult"]
+      response_obj["GetCategoriesResult"].map{|r| Models::Category.from_response_hash(r)}
     end
 
-    def models(make_id, year_id, category_id)
-      response = get_url "Models/#{make_id}/#{year_id}/#{category_id}"
+    # Lists the models available for a given make, year and category
+    #
+    # @param make [Nada::Models::Make] Make to search with
+    # @param year [Integer] Year to search with
+    # @param category [Nada::Models::Category] Category to search with
+    # @return [Array<Nada::Models::Model>] Models available within
+    # search
+    def models(make, year, category)
+      response = get_url "Models/#{make.id}/#{year}/#{category.id}"
       response_obj = JSON.parse response
-      response_obj["GetModelsResult"]
+      response_obj["GetModelsResult"].map{|r| Models::Model.from_response_hash(r)}
     end
 
     def trims(year_id, model_id)
