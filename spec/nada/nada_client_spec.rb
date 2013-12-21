@@ -48,7 +48,6 @@ describe Nada::NadaClient, "#categories" do
     valid_year = 2013
 
     result = default_client.categories make, valid_year
-    binding.pry
     expect(result).to be_an Array
   end
 end
