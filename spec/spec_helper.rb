@@ -4,6 +4,7 @@ Dotenv.load
 
 require 'rspec'
 require 'rest-client'
+require 'virtus'
 require 'pry'
 require 'nada'
 

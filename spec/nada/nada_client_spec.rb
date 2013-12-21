@@ -32,8 +32,7 @@ end
 
 describe Nada::NadaClient, "#years" do
   it "returns an array of hashes representing years and ids" do
-    make = Nada::Models::Make.new
-    make.id = 1216
+    make = Nada::Models::Make.new id: 1216
 
     result = default_client.years make
     expect(result).to be_an Array
@@ -43,8 +42,7 @@ end
 
 describe Nada::NadaClient, "#categories" do
   it "returns an array of hashes" do
-    make = Nada::Models::Make.new
-    make.id = 1216
+    make = Nada::Models::Make.new id: 1216
     valid_year = 2013
 
     result = default_client.categories make, valid_year
