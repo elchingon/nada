@@ -70,7 +70,6 @@ module Nada
       year = 2013
       model = Models::Model.new id: 10253
 
-
       result = default_client.trims year, model
       expect(result).to be_an Array
       expect(result.first).to be_a Models::Vehicle
@@ -79,10 +78,11 @@ module Nada
 
   describe NadaClient, "#options" do
     it "returns an array of hashes representing options" do
-      valid_vehicle_id = 117209
+      vehicle = Models::Vehicle.new id: 117209
 
-      result = default_client.options valid_vehicle_id
+      result = default_client.options vehicle
       expect(result).to be_an Array
+      expect(result.first).to be_a Models::Option
     end
   end
 

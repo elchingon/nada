@@ -72,10 +72,14 @@ module Nada
       response_obj["GetTrimsResult"].map{|r| Models::Vehicle.from_response_hash(r)}
     end
 
-    def options(vehicle_id)
-      response = get_url "Options/#{vehicle_id}"
+    # Lists the options available for a given vehicle
+    #
+    # @param vehicle [Nada::Models::Vehicle] Vehicle to search with
+    # @return [Array<Nada::Models::Option>] Options available for vehicle
+    def options(vehicle)
+      response = get_url "Options/#{vehicle.id}"
       response_obj = JSON.parse response
-      response_obj["GetOptionsResult"]
+      response_obj["GetOptionsResult"].map{|r| Models::Option.from_response_hash(r)}
     end
 
     def used_price(vehicle_id, options_string, mileage)
