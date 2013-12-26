@@ -40,6 +40,13 @@ module Nada
       expect(result).to be_an Array
       expect(result.first).to be_a Integer
     end
+
+    it "accepts make as a string" do
+      make = 1216
+      result = default_client.years make
+      expect(result).to be_an Array
+      expect(result.first).to be_a Integer
+    end
   end
 
   describe NadaClient, "#categories" do
