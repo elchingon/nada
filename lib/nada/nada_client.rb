@@ -96,9 +96,10 @@ module Nada
 
     private
 
-    # Validate if varaible is an Object or string
+    # Validate if variable is an Object, String or Integer
+    # Allows strings to be passed as cascading dependencies
     def get_object_id object
-      object.is_a?(Object) ? object.id : object
+      object.is_a?(String) || object.is_a?(Integer) ? object : object.id
     end
 
     def get_url(url_suffix)
