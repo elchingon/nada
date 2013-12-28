@@ -30,7 +30,8 @@ module Nada
     # @param make [Nada::Models::Make] Make to search for available years
     # @return [Array<Integer>] Years that are available
     def years(make)
-      response = get_url "Years/#{make.id}"
+      make_id = get_object_id make
+      response = get_url "Years/#{make_id}"
       response_obj = JSON.parse response
       response_obj["GetYearsResult"].map{|r| r["Year"]}
     end
@@ -42,7 +43,8 @@ module Nada
     # @return [Array<Nada::Models::Category>] Categories available within
     # search
     def categories(make, year)
-      response = get_url "Categories/#{make.id}/#{year}"
+      make_id = get_object_id make
+      response = get_url "Categories/#{make_id}/#{year}"
       response_obj = JSON.parse response
       response_obj["GetCategoriesResult"].map{|r| Models::Category.from_response_hash(r)}
     end
@@ -55,7 +57,9 @@ module Nada
     # @return [Array<Nada::Models::Model>] Models available within
     # search
     def models(make, year, category)
-      response = get_url "Models/#{make.id}/#{year}/#{category.id}"
+      make_id = get_object_id make
+      category_id = get_object_id category
+      response = get_url "Models/#{make_id}/#{year}/#{category_id}"
       response_obj = JSON.parse response
       response_obj["GetModelsResult"].map{|r| Models::Model.from_response_hash(r)}
     end
@@ -67,7 +71,8 @@ module Nada
     # @return [Array<Nada::Models::Vehicle>] Vehicles available within
     # search
     def trims(year, model)
-      response = get_url "Trims/#{year}/#{model.id}"
+      model_id = get_object_id model
+      response = get_url "Trims/#{year}/#{model_id}"
       response_obj = JSON.parse response
       response_obj["GetTrimsResult"].map{|r| Models::Vehicle.from_response_hash(r)}
     end
@@ -77,7 +82,8 @@ module Nada
     # @param vehicle [Nada::Models::Vehicle] Vehicle to search with
     # @return [Array<Nada::Models::Option>] Options available for vehicle
     def options(vehicle)
-      response = get_url "Options/#{vehicle.id}"
+      vehicle_id = get_object_id vehicle
+      response = get_url "Options/#{vehicle_id}"
       response_obj = JSON.parse response
       response_obj["GetOptionsResult"].map{|r| Models::Option.from_response_hash(r)}
     end
@@ -97,6 +103,12 @@ module Nada
     end
 
     private
+
+    # Validate if variable is an Object, String or Integer
+    # Allows strings to be passed as cascading dependencies
+    def get_object_id object
+      object.is_a?(String) || object.is_a?(Integer) ? object : object.id
+    end
 
     def get_url(url_suffix)
       RestClient.get "#{root_url}/#{url_suffix}", "UserName" => username, "password" => password

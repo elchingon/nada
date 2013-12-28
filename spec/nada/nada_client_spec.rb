@@ -40,11 +40,27 @@ module Nada
       expect(result).to be_an Array
       expect(result.first).to be_a Integer
     end
+
+    it "accepts make as a string" do
+      make = '1216'
+      result = default_client.years make
+      expect(result).to be_an Array
+      expect(result.first).to be_a Integer
+    end
   end
 
   describe NadaClient, "#categories" do
     it "returns an array of hashes" do
       make = Models::Make.new id: 1216
+      valid_year = 2013
+
+      result = default_client.categories make, valid_year
+      expect(result).to be_an Array
+      expect(result.first).to be_a Models::Category
+    end
+
+    it "accepts make as a string" do
+      make = "1216"
       valid_year = 2013
 
       result = default_client.categories make, valid_year
@@ -63,6 +79,16 @@ module Nada
       expect(result).to be_an Array
       expect(result.first).to be_a Models::Model
     end
+
+    it "accepts make and category  as a string" do
+      make = "1216"
+      year = 2013
+      category = "18"
+
+      result = default_client.models make, year, category
+      expect(result).to be_an Array
+      expect(result.first).to be_a Models::Model
+    end
   end
 
   describe NadaClient, "#trims" do
@@ -74,11 +100,27 @@ module Nada
       expect(result).to be_an Array
       expect(result.first).to be_a Models::Vehicle
     end
+
+    it "accepts model as a string" do
+      year = 2013
+      model = "10253"
+
+      result = default_client.trims year, model
+      expect(result).to be_an Array
+      expect(result.first).to be_a Models::Vehicle
+    end
   end
 
   describe NadaClient, "#options" do
     it "returns an array of hashes representing options" do
       vehicle = Models::Vehicle.new id: 117209
+
+      result = default_client.options vehicle
+      expect(result).to be_an Array
+      expect(result.first).to be_a Models::Option
+    end
+    it "accepts vehicle as a string" do
+      vehicle = "117209"
 
       result = default_client.options vehicle
       expect(result).to be_an Array
