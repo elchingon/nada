@@ -46,6 +46,24 @@ describe Nada::Models::UsedPrice, ".from_response_hash" do
 
     price = described_class.from_response_hash input
 
-    # expect(price.id).to eq(117209)
+    expect(price.year).to eq("2013")
+    expect(price.make_id).to eq(1216)
+    expect(price.make_name).to eq("Volvo")
+    expect(price.model_id).to eq(10253)
+    expect(price.model_name).to eq("XC60")
+    expect(price.vehicle_id).to eq(117209)
+    expect(price.vehicle_name).to eq("Utility 4D 3.2 2WD I6")
+    expect(price.base_rough_trade_in_price).to eq("24650.00")
+    expect(price.base_average_trade_in_price).to eq("26400.00")
+    expect(price.base_clean_trade_in_price).to eq("27850.00")
+    expect(price.base_clean_retail_price).to eq("31700.00")
+    expect(price.total_option_rough_trade_in_price).to eq("-550")
+    expect(price.total_option_average_trade_in_price).to eq("-550")
+    expect(price.total_option_clean_trade_in_price).to eq("-550")
+    expect(price.total_option_clean_retail_price).to eq("-525")
+    expect(price.total_rough_trade_in_price).to eq("23600.00")
+    expect(price.total_average_trade_in_price).to eq("25350.00")
+    expect(price.total_clean_trade_in_price).to eq("26800.00")
+    expect(price.total_clean_retail_price).to eq("30675.00")
   end
 end
