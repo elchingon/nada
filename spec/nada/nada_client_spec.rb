@@ -139,6 +139,16 @@ module Nada
       result = default_client.used_price vehicle, [option_1, option_2, option_3], mileage
       expect(result).to be_a Models::UsedPrice
     end
+    it "accepts vehicle as a string" do
+      vehicle = 117209
+      option_1 = Models::Option.new code: "137"
+      option_2 = Models::Option.new code: "224"
+      option_3 = Models::Option.new code: "018"
+      mileage = 25000
+
+      result = default_client.used_price vehicle, [option_1, option_2, option_3], mileage
+      expect(result).to be_a Models::UsedPrice
+    end
   end
 
 end
