@@ -10,6 +10,8 @@ module Nada::Models
       attribute :model_name, String
       attribute :vehicle_id, Integer
       attribute :vehicle_name, String
+      attribute :mileage, String
+      attribute :mileage_adjustment, String
       attribute :base_rough_trade_in_price, String
       attribute :base_average_trade_in_price, String
       attribute :base_clean_trade_in_price, String
@@ -35,6 +37,8 @@ module Nada::Models
         model_id: hash["ModelReturnTO"]["n_ModelID"],
         model_name: hash["ModelReturnTO"]["ModelDisplayName"],
         vehicle_id: hash["VehicleID"],
+        mileage: hash["Mileage"],
+        mileage_adjustment: hash["MileageAdjustment"],
         vehicle_name: hash["VehicleDisplayName"],
         base_rough_trade_in_price: hash["BasePrice"]["RoughTradeIn"],
         base_average_trade_in_price: hash["BasePrice"]["AverageTradeIn"],

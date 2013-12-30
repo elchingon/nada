@@ -52,6 +52,8 @@ describe Nada::Models::UsedPrice, ".from_response_hash" do
     expect(price.model_id).to eq(10253)
     expect(price.model_name).to eq("XC60")
     expect(price.vehicle_id).to eq(117209)
+    expect(price.mileage).to eq("25000")
+    expect(price.mileage_adjustment).to eq("-500")
     expect(price.vehicle_name).to eq("Utility 4D 3.2 2WD I6")
     expect(price.base_rough_trade_in_price).to eq("24650.00")
     expect(price.base_average_trade_in_price).to eq("26400.00")
