@@ -149,6 +149,15 @@ module Nada
       result = default_client.used_price vehicle, [option_1, option_2, option_3], mileage
       expect(result).to be_a Models::UsedPrice
     end
+    it "it works with no options" do
+      vehicle = 117209
+      options = []
+      mileage = 25000
+
+      result = default_client.used_price vehicle, options, mileage
+      expect(result).to be_a Models::UsedPrice
+    end
+
   end
 
 end

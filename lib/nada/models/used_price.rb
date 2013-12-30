@@ -24,10 +24,6 @@ module Nada::Models
       attribute :total_average_trade_in_price, String
       attribute :total_clean_trade_in_price, String
       attribute :total_clean_retail_price, String
-      #attribute :rough_trade_in_explanation, String
-      #attribute :average_trade_in_explanation, String
-      #attribute :trade_in_explanation, String
-      #attribute :clean_retail_explanation, String
     end
 
     def self.from_response_hash hash
@@ -52,10 +48,6 @@ module Nada::Models
         total_average_trade_in_price: hash["TotalPrice"]["AverageTradeIn"],
         total_clean_trade_in_price: hash["TotalPrice"]["CleanTradeIn"],
         total_clean_retail_price: hash["TotalPrice"]["CleanRetail"]
-      #rough_trade_in_explanation: hash["PriceTypes"]
-      #average_trade_in_explanation: hash["PriceTypes"]
-      #trade_in_explanation: hash["PriceTypes"]
-      #clean_retail_explanation: hash["PriceTypes"]
     end
   end
 end

@@ -27,7 +27,7 @@ module Nada
 
     # Lists the years available for a given make
     #
-    # @param make [Nada::Models::Make] Make to search for available years
+    # @param make [Nada::Models::Make, String] Make to search for available years
     # @return [Array<Integer>] Years that are available
     def years(make)
       make_id = get_object_id make
@@ -38,7 +38,7 @@ module Nada
 
     # Lists the categories available for a given make and year
     #
-    # @param make [Nada::Models::Make] Make to search with
+    # @param make [Nada::Models::Make, String] Make to search with
     # @param year [Integer] Year to search with
     # @return [Array<Nada::Models::Category>] Categories available within
     # search
@@ -51,9 +51,9 @@ module Nada
 
     # Lists the models available for a given make, year and category
     #
-    # @param make [Nada::Models::Make] Make to search with
+    # @param make [Nada::Models::Make, String] Make to search with
     # @param year [Integer] Year to search with
-    # @param category [Nada::Models::Category] Category to search with
+    # @param category [Nada::Models::Category, String] Category to search with
     # @return [Array<Nada::Models::Model>] Models available within
     # search
     def models(make, year, category)
@@ -67,7 +67,7 @@ module Nada
     # Lists the trims available for a given year, model
     #
     # @param year [Integer] Year to search with
-    # @param category [Nada::Models::Model] Model to search with
+    # @param category [Nada::Models::Model, String] Model to search with
     # @return [Array<Nada::Models::Vehicle>] Vehicles available within
     # search
     def trims(year, model)
@@ -79,7 +79,7 @@ module Nada
 
     # Lists the options available for a given vehicle
     #
-    # @param vehicle [Nada::Models::Vehicle] Vehicle to search with
+    # @param vehicle [Nada::Models::Vehicle, String] Vehicle to search with
     # @return [Array<Nada::Models::Option>] Options available for vehicle
     def options(vehicle)
       vehicle_id = get_object_id vehicle
@@ -90,24 +90,32 @@ module Nada
 
     # Gets the pricing information for this vehicle
     #
-    # @param vehicle [Nada::Models::Vehicle] Vehicle to get the price for
+    # @param vehicle [Nada::Models::Vehicle, String] Vehicle to get the price for
     # @param options [Array<Nada::Models::Option] The options on this specific vehicle
     # @param mileage [Integer] Number of miles on this vehicle
     # @return [Nada::Models::UsedPrice] Price information for this vehicle
     def used_price(vehicle, options=[], mileage)
-      options_string = options.collect(&:code).join("|")
       vehicle_id = get_object_id vehicle
-      response = get_url "Prices/#{vehicle_id}/#{URI::escape(options_string)}/#{mileage}"
+      response = get_url "Prices/#{vehicle_id}/#{options_string(options)}/#{mileage}"
       response_obj = JSON.parse response
       Models::UsedPrice.from_response_hash response_obj["GetUsedPriceResult"]
     end
 
     private
 
+    def options_string options=[]
+      if options.empty?
+        "%20"
+      else
+        options_string = options.collect(&:code).join("|")
+        URI::escape(options_string)
+      end
+    end
+
     # Validate if variable is an Object, String or Integer
     # Allows strings to be passed as cascading dependencies
     def get_object_id object
-      object.is_a?(String) || object.is_a?(Integer) ? object : object.id
+      object.respond_to?(:id) ? object.id : object
     end
 
     def get_url(url_suffix)
