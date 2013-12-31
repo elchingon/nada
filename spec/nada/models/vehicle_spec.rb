@@ -15,5 +15,10 @@ describe Nada::Models::Vehicle, ".from_response_hash" do
 
     expect(vehicle.id).to eq(117209)
     expect(vehicle.name).to eq("Utility 4D 3.2 2WD I6")
+    expect(vehicle.year).to eq(2013)
+    expect(vehicle.make_id).to eq(1216)
+    expect(vehicle.make_name).to eq("Volvo")
+    expect(vehicle.model_id).to eq(10253)
+    expect(vehicle.model_name).to eq("XC60")
   end
 end

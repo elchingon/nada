@@ -17,5 +17,9 @@ describe Nada::Models::Model, ".from_response_hash" do
 
     expect(model.id).to eq(10253)
     expect(model.name).to eq("XC60")
+    expect(model.make_id).to eq(1216)
+    expect(model.make_name).to eq("Volvo")
+    expect(model.category_id).to eq(18)
+    expect(model.category_name).to eq("SUVs")
   end
 end
